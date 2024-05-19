@@ -56,6 +56,11 @@ layout_mode = 2
 text = "Quit
 "
 
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -4096
+position = Vector2(576.25, 324.25)
+scale = Vector2(17.9922, 10.0859)
+
 [connection signal="button_down" from="MarginContainer/VBoxContainer/Play" to="MarginContainer/VBoxContainer/Play/AnimatedSprite2D" method="_on_play_button_down"]
 [connection signal="button_up" from="MarginContainer/VBoxContainer/Play" to="MarginContainer/VBoxContainer/Play/AnimatedSprite2D" method="_on_play_button_up"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
