@@ -1,26 +1,33 @@
-[gd_scene load_steps=2 format=3 uid="uid://ryvq8ieim3hb"]
+[gd_scene load_steps=3 format=3 uid="uid://ryvq8ieim3hb"]
 
 [ext_resource type="Script" path="res://option_menu.gd" id="1_ok0np"]
+[ext_resource type="Texture2D" uid="uid://ddyw6y7i8cdyh" path="res://Pixel art background found online.jpg" id="2_otkxl"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = 2.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ok0np")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_right = 1153.0
+offset_bottom = 648.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
+size_flags_vertical = 4
+size_flags_stretch_ratio = 3.58
+alignment = 1
 
 [node name="HSlider" type="HSlider" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
+tooltip_text = "Volume Slider
+"
 min_value = -30.0
 max_value = 0.0
 value = -7.0
@@ -29,6 +36,12 @@ value = -7.0
 layout_mode = 2
 text = "back
 "
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = -1
+position = Vector2(576, 323)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("2_otkxl")
 
 [connection signal="value_changed" from="MarginContainer/VBoxContainer/HSlider" to="." method="_on_h_slider_value_changed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/back" to="." method="_on_back_pressed"]

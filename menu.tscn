@@ -1,23 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://wluwydlclc8x"]
+[gd_scene load_steps=3 format=3 uid="uid://wluwydlclc8x"]
 
 [ext_resource type="Script" path="res://Menu.gd" id="1_s23cg"]
-[ext_resource type="Texture2D" uid="uid://ce5cwawg0g5q5" path="res://32 by 32 template Button1.png" id="2_yvjrx"]
-[ext_resource type="Texture2D" uid="uid://dihngajgf2hef" path="res://32 by 32 template Button2.png" id="3_wekhm"]
-[ext_resource type="Script" path="res://AnimatedSprite2D.gd" id="4_8p7bf"]
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_h1hfp"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("2_yvjrx")
-}, {
-"duration": 1.0,
-"texture": ExtResource("3_wekhm")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
+[ext_resource type="Texture2D" uid="uid://ddyw6y7i8cdyh" path="res://Pixel art background found online.jpg" id="2_rjpgy"]
 
 [node name="Menu" type="Control"]
 layout_mode = 3
@@ -30,22 +14,19 @@ script = ExtResource("1_s23cg")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = -6.0
+offset_top = -6.0
+offset_right = 1159.0
+offset_bottom = 652.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
+alignment = 1
 
 [node name="Play" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Play"
 icon_alignment = 1
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="MarginContainer/VBoxContainer/Play"]
-position = Vector2(35, 18)
-scale = Vector2(2.15625, 1.4375)
-sprite_frames = SubResource("SpriteFrames_h1hfp")
-script = ExtResource("4_8p7bf")
 
 [node name="Options" type="Button" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -57,12 +38,14 @@ text = "Quit
 "
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-z_index = -4096
-position = Vector2(576.25, 324.25)
-scale = Vector2(17.9922, 10.0859)
+z_index = -1
+position = Vector2(579, 324)
+scale = Vector2(0.603125, 0.6)
+texture = ExtResource("2_rjpgy")
 
-[connection signal="button_down" from="MarginContainer/VBoxContainer/Play" to="MarginContainer/VBoxContainer/Play/AnimatedSprite2D" method="_on_play_button_down"]
-[connection signal="button_up" from="MarginContainer/VBoxContainer/Play" to="MarginContainer/VBoxContainer/Play/AnimatedSprite2D" method="_on_play_button_up"]
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(582, 323)
+
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Options" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/Quit" to="." method="_on_quit_pressed"]
