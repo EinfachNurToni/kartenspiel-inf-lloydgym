@@ -1,7 +1,20 @@
-[gd_scene load_steps=2 format=3 uid="uid://ceijbufn26s3a"]
+[gd_scene load_steps=3 format=3 uid="uid://ceijbufn26s3a"]
 
 [ext_resource type="Script" path="res://test.gd" id="1_17ipk"]
+[ext_resource type="Texture2D" uid="uid://twfwwph4jq6e" path="res://Card deck sprite.png" id="2_v0oba"]
 
 [node name="Game" type="Node2D"]
 position = Vector2(-13, -72)
 script = ExtResource("1_17ipk")
+
+[node name="Button" type="Button" parent="."]
+offset_left = 950.0
+offset_top = 570.0
+offset_right = 1204.0
+offset_bottom = 744.0
+icon = ExtResource("2_v0oba")
+flat = true
+icon_alignment = 1
+expand_icon = true
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
