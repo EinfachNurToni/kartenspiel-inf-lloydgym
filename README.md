@@ -1,4 +1,4 @@
-# Kartenspiel für inf14 (Lloyd Gymnasium Bremerhaven)
+# UNO-mäßiges Kartenspiel für inf14 (Lloyd Gymnasium Bremerhaven)
 Erstellt mit:
 - Godot v4.2.2
 - Aseprite (Pixel Art)
