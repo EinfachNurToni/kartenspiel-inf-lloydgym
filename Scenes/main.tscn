@@ -1,0 +1,1023 @@
+[gd_scene load_steps=22 format=3 uid="uid://0f8scb4gv44p"]
+
+[ext_resource type="Script" path="res://Scripts/GameplayManager.gd" id="1_hlcmk"]
+[ext_resource type="Script" path="res://Scripts/CardDeck.gd" id="2_4lbfr"]
+[ext_resource type="Script" path="res://Scripts/Card.gd" id="2_h7o4c"]
+[ext_resource type="PackedScene" uid="uid://c6wc8s1ejppvk" path="res://Scenes/player.tscn" id="3_3yvdy"]
+[ext_resource type="Texture2D" uid="uid://cymo6xnjaovph" path="res://Sprites/cardBackground.png" id="3_da4b7"]
+[ext_resource type="Script" path="res://Scripts/PlayerUI.gd" id="6_mjjxp"]
+[ext_resource type="Texture2D" uid="uid://bjye0nil1y4cg" path="res://Sprites/cardDeck.png" id="6_pi5hg"]
+[ext_resource type="Script" path="res://Scripts/TutorialLogic.gd" id="6_xg3bv"]
+[ext_resource type="Script" path="res://Scripts/DrawingCardLogic.gd" id="7_huy6n"]
+[ext_resource type="Texture2D" uid="uid://bfckwmxjox1bi" path="res://Sprites/arrow.png" id="7_tsn65"]
+[ext_resource type="FontFile" uid="uid://cag4oyvhd1ms4" path="res://Fonts/pixelme.ttf" id="8_nx7l1"]
+[ext_resource type="Script" path="res://Scripts/CardValueIndicator.gd" id="8_vvoi7"]
+[ext_resource type="PackedScene" uid="uid://v3nhyv6q1hlp" path="res://Scenes/stats_of_player.tscn" id="10_wgafc"]
+[ext_resource type="Script" path="res://Scripts/ErrorLabel.gd" id="11_4bjfu"]
+[ext_resource type="Script" path="res://Scripts/GameOverLogic.gd" id="15_0pcgg"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_f7mu5"]
+bg_color = Color(1, 1, 1, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jd1gs"]
+bg_color = Color(1, 1, 1, 0.196078)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+expand_margin_left = 1.0
+expand_margin_top = 1.0
+expand_margin_right = 1.0
+expand_margin_bottom = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gj7vp"]
+bg_color = Color(1, 1, 1, 0.588235)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vqrvt"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t0vau"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_egood"]
+bg_color = Color(0.0383971, 0.0383972, 0.0383972, 0.960784)
+
+[node name="Gameplay Manager" type="Node2D" node_paths=PackedStringArray("playerSequence", "playersTurnLabel")]
+script = ExtResource("1_hlcmk")
+playerSequence = [NodePath("Players/Player"), NodePath("Players/Player2"), NodePath("Players/Player3"), NodePath("Players/Player4")]
+playersTurnLabel = NodePath("Canvas Layer/Ready Label")
+
+[node name="Card Deck" type="Node" parent="." node_paths=PackedStringArray("newCardPosition", "cardsToStartWith")]
+unique_name_in_owner = true
+script = ExtResource("2_4lbfr")
+newCardPosition = NodePath("../Canvas Layer/Pointer Card Deck")
+cardsToStartWith = [NodePath("Attack Card (+5)"), NodePath("Attack Card (+10)"), NodePath("Attack Card (+20)"), NodePath("Attack Card (+30)"), NodePath("Defense Card (+5)"), NodePath("Defense Card (+15)"), NodePath("Defense Card (+20)")]
+amountOfCardsToStartWith = Array[int]([3, 5, 4, 2, 5, 4, 2])
+
+[node name="Attack Card (+5)" type="TextureRect" parent="Card Deck"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -540.0
+offset_right = -829.5
+offset_bottom = -366.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(65.25, 87)
+texture = ExtResource("3_da4b7")
+expand_mode = 3
+stretch_mode = 4
+script = ExtResource("2_h7o4c")
+cardPath = "res://Sprites/attackCard.png"
+cardBackgroundPath = "res://Sprites/cardBackground.png"
+title = "Attack Card (+5)"
+cardValue = 5
+
+[node name="Card Button" type="Button" parent="Card Deck/Attack Card (+5)"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_f7mu5")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jd1gs")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_gj7vp")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_vqrvt")
+
+[node name="Top Right Value" type="Label" parent="Card Deck/Attack Card (+5)"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -116.5
+offset_right = -7.5
+offset_bottom = 54.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("8_nx7l1")
+theme_override_font_sizes/font_size = 32
+text = "00"
+horizontal_alignment = 2
+vertical_alignment = 1
+script = ExtResource("8_vvoi7")
+
+[node name="Bottom Left Value" type="Label" parent="Card Deck/Attack Card (+5)"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -12.5
+offset_top = 174.0
+offset_right = 99.5
+offset_bottom = 228.0
+grow_horizontal = 0
+rotation = 3.14159
+pivot_offset = Vector2(0.5, 0)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("8_nx7l1")
+theme_override_font_sizes/font_size = 32
+text = "00"
+horizontal_alignment = 2
+vertical_alignment = 1
+script = ExtResource("8_vvoi7")
+
+[node name="Attack Card (+10)" type="TextureRect" parent="Card Deck"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -540.0
+offset_right = -829.5
+offset_bottom = -366.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(65.25, 87)
+texture = ExtResource("3_da4b7")
+expand_mode = 3
+stretch_mode = 4
+script = ExtResource("2_h7o4c")
+cardPath = "res://Sprites/attackCard.png"
+cardBackgroundPath = "res://Sprites/cardBackground.png"
+title = "Attack Card (+10)"
+cardValue = 10
+
+[node name="Card Button" type="Button" parent="Card Deck/Attack Card (+10)"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_f7mu5")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jd1gs")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_gj7vp")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_vqrvt")
+
+[node name="Top Right Value" type="Label" parent="Card Deck/Attack Card (+10)"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -116.5
+offset_right = -7.5
+offset_bottom = 54.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("8_nx7l1")
+theme_override_font_sizes/font_size = 32
+text = "00"
+horizontal_alignment = 2
+vertical_alignment = 1
+script = ExtResource("8_vvoi7")
+
+[node name="Bottom Left Value" type="Label" parent="Card Deck/Attack Card (+10)"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -12.5
+offset_top = 174.0
+offset_right = 99.5
+offset_bottom = 228.0
+grow_horizontal = 0
+rotation = 3.14159
+pivot_offset = Vector2(0.5, 0)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("8_nx7l1")
+theme_override_font_sizes/font_size = 32
+text = "00"
+horizontal_alignment = 2
+vertical_alignment = 1
+script = ExtResource("8_vvoi7")
+
+[node name="Attack Card (+20)" type="TextureRect" parent="Card Deck"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -540.0
+offset_right = -829.5
+offset_bottom = -366.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(65.25, 87)
+texture = ExtResource("3_da4b7")
+expand_mode = 3
+stretch_mode = 4
+script = ExtResource("2_h7o4c")
+cardPath = "res://Sprites/attackCard.png"
+cardBackgroundPath = "res://Sprites/cardBackground.png"
+title = "Attack Card (+20)"
+cardValue = 20
+
+[node name="Card Button" type="Button" parent="Card Deck/Attack Card (+20)"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_f7mu5")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jd1gs")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_gj7vp")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_vqrvt")
+
+[node name="Top Right Value" type="Label" parent="Card Deck/Attack Card (+20)"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -116.5
+offset_right = -7.5
+offset_bottom = 54.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("8_nx7l1")
+theme_override_font_sizes/font_size = 32
+text = "00"
+horizontal_alignment = 2
+vertical_alignment = 1
+script = ExtResource("8_vvoi7")
+
+[node name="Bottom Left Value" type="Label" parent="Card Deck/Attack Card (+20)"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -12.5
+offset_top = 174.0
+offset_right = 99.5
+offset_bottom = 228.0
+grow_horizontal = 0
+rotation = 3.14159
+pivot_offset = Vector2(0.5, 0)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("8_nx7l1")
+theme_override_font_sizes/font_size = 32
+text = "00"
+horizontal_alignment = 2
+vertical_alignment = 1
+script = ExtResource("8_vvoi7")
+
+[node name="Attack Card (+30)" type="TextureRect" parent="Card Deck"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -540.0
+offset_right = -829.5
+offset_bottom = -366.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(65.25, 87)
+texture = ExtResource("3_da4b7")
+expand_mode = 3
+stretch_mode = 4
+script = ExtResource("2_h7o4c")
+cardPath = "res://Sprites/attackCard.png"
+cardBackgroundPath = "res://Sprites/cardBackground.png"
+title = "Attack Card (+30)"
+cardValue = 30
+
+[node name="Card Button" type="Button" parent="Card Deck/Attack Card (+30)"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_f7mu5")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jd1gs")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_gj7vp")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_vqrvt")
+
+[node name="Top Right Value" type="Label" parent="Card Deck/Attack Card (+30)"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -116.5
+offset_right = -7.5
+offset_bottom = 54.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("8_nx7l1")
+theme_override_font_sizes/font_size = 32
+text = "00"
+horizontal_alignment = 2
+vertical_alignment = 1
+script = ExtResource("8_vvoi7")
+
+[node name="Bottom Left Value" type="Label" parent="Card Deck/Attack Card (+30)"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -12.5
+offset_top = 174.0
+offset_right = 99.5
+offset_bottom = 228.0
+grow_horizontal = 0
+rotation = 3.14159
+pivot_offset = Vector2(0.5, 0)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("8_nx7l1")
+theme_override_font_sizes/font_size = 32
+text = "00"
+horizontal_alignment = 2
+vertical_alignment = 1
+script = ExtResource("8_vvoi7")
+
+[node name="Defense Card (+5)" type="TextureRect" parent="Card Deck"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -540.0
+offset_right = -829.5
+offset_bottom = -366.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(65.25, 87)
+texture = ExtResource("3_da4b7")
+expand_mode = 3
+stretch_mode = 4
+script = ExtResource("2_h7o4c")
+cardPath = "res://Sprites/defenseCard.png"
+cardBackgroundPath = "res://Sprites/cardBackground.png"
+title = "Defense Card (+5)"
+cardValue = -5
+
+[node name="Card Button" type="Button" parent="Card Deck/Defense Card (+5)"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_f7mu5")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jd1gs")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_gj7vp")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_vqrvt")
+
+[node name="Top Right Value" type="Label" parent="Card Deck/Defense Card (+5)"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -116.5
+offset_right = -7.5
+offset_bottom = 54.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("8_nx7l1")
+theme_override_font_sizes/font_size = 32
+text = "00"
+horizontal_alignment = 2
+vertical_alignment = 1
+script = ExtResource("8_vvoi7")
+
+[node name="Bottom Left Value" type="Label" parent="Card Deck/Defense Card (+5)"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -12.5
+offset_top = 174.0
+offset_right = 99.5
+offset_bottom = 228.0
+grow_horizontal = 0
+rotation = 3.14159
+pivot_offset = Vector2(0.5, 0)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("8_nx7l1")
+theme_override_font_sizes/font_size = 32
+text = "00"
+horizontal_alignment = 2
+vertical_alignment = 1
+script = ExtResource("8_vvoi7")
+
+[node name="Defense Card (+15)" type="TextureRect" parent="Card Deck"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -540.0
+offset_right = -829.5
+offset_bottom = -366.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(65.25, 87)
+texture = ExtResource("3_da4b7")
+expand_mode = 3
+stretch_mode = 4
+script = ExtResource("2_h7o4c")
+cardPath = "res://Sprites/defenseCard.png"
+cardBackgroundPath = "res://Sprites/cardBackground.png"
+title = "Defense Card (+15)"
+cardValue = -15
+
+[node name="Card Button" type="Button" parent="Card Deck/Defense Card (+15)"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_f7mu5")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jd1gs")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_gj7vp")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_vqrvt")
+
+[node name="Top Right Value" type="Label" parent="Card Deck/Defense Card (+15)"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -116.5
+offset_right = -7.5
+offset_bottom = 54.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("8_nx7l1")
+theme_override_font_sizes/font_size = 32
+text = "00"
+horizontal_alignment = 2
+vertical_alignment = 1
+script = ExtResource("8_vvoi7")
+
+[node name="Bottom Left Value" type="Label" parent="Card Deck/Defense Card (+15)"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -12.5
+offset_top = 174.0
+offset_right = 99.5
+offset_bottom = 228.0
+grow_horizontal = 0
+rotation = 3.14159
+pivot_offset = Vector2(0.5, 0)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("8_nx7l1")
+theme_override_font_sizes/font_size = 32
+text = "00"
+horizontal_alignment = 2
+vertical_alignment = 1
+script = ExtResource("8_vvoi7")
+
+[node name="Defense Card (+20)" type="TextureRect" parent="Card Deck"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -540.0
+offset_right = -829.5
+offset_bottom = -366.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(65.25, 87)
+texture = ExtResource("3_da4b7")
+expand_mode = 3
+stretch_mode = 4
+script = ExtResource("2_h7o4c")
+cardPath = "res://Sprites/defenseCard.png"
+cardBackgroundPath = "res://Sprites/cardBackground.png"
+title = "Defense Card (+20)"
+cardValue = -20
+
+[node name="Card Button" type="Button" parent="Card Deck/Defense Card (+20)"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_f7mu5")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jd1gs")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_gj7vp")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_vqrvt")
+
+[node name="Top Right Value" type="Label" parent="Card Deck/Defense Card (+20)"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -116.5
+offset_right = -7.5
+offset_bottom = 54.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("8_nx7l1")
+theme_override_font_sizes/font_size = 32
+text = "00"
+horizontal_alignment = 2
+vertical_alignment = 1
+script = ExtResource("8_vvoi7")
+
+[node name="Bottom Left Value" type="Label" parent="Card Deck/Defense Card (+20)"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -12.5
+offset_top = 174.0
+offset_right = 99.5
+offset_bottom = 228.0
+grow_horizontal = 0
+rotation = 3.14159
+pivot_offset = Vector2(0.5, 0)
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("8_nx7l1")
+theme_override_font_sizes/font_size = 32
+text = "00"
+horizontal_alignment = 2
+vertical_alignment = 1
+script = ExtResource("8_vvoi7")
+
+[node name="Players" type="Node" parent="."]
+
+[node name="Player" parent="Players" node_paths=PackedStringArray("positionOfCardHandObject", "handUIObject", "playerStats") instance=ExtResource("3_3yvdy")]
+playerName = "Player 1"
+positionOfCardHandObject = NodePath("../../Canvas Layer/Pointer Player1")
+handUIObject = NodePath("../../Canvas Layer/Hand UI of Player 1")
+playerStats = NodePath("../../Canvas Layer/Stats of Player 1")
+
+[node name="Player2" parent="Players" node_paths=PackedStringArray("positionOfCardHandObject", "handUIObject", "playerStats") instance=ExtResource("3_3yvdy")]
+playerName = "Player 2"
+positionOfCardHandObject = NodePath("../../Canvas Layer/Pointer Player2")
+handUIObject = NodePath("../../Canvas Layer/Hand UI of Player 2")
+playerStats = NodePath("../../Canvas Layer/Stats of Player 2")
+
+[node name="Player3" parent="Players" node_paths=PackedStringArray("positionOfCardHandObject", "handUIObject", "playerStats") instance=ExtResource("3_3yvdy")]
+playerName = "Player 3"
+positionOfCardHandObject = NodePath("../../Canvas Layer/Pointer Player3")
+handUIObject = NodePath("../../Canvas Layer/Hand UI of Player 3")
+playerStats = NodePath("../../Canvas Layer/Stats of Player 3")
+
+[node name="Player4" parent="Players" node_paths=PackedStringArray("positionOfCardHandObject", "handUIObject", "playerStats") instance=ExtResource("3_3yvdy")]
+playerName = "Player 4"
+positionOfCardHandObject = NodePath("../../Canvas Layer/Pointer Player4")
+handUIObject = NodePath("../../Canvas Layer/Hand UI of Player 4")
+playerStats = NodePath("../../Canvas Layer/Stats of Player 4")
+
+[node name="Canvas Layer" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+
+[node name="Tutorial Stuff" type="Control" parent="Canvas Layer" node_paths=PackedStringArray("tutorialStuff", "statsOfPlayers")]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("6_xg3bv")
+tutorialStuff = [NodePath("Tutorial Text 1"), NodePath("Tutorial Arrow")]
+statsOfPlayers = [NodePath("../Stats of Player 1"), NodePath("../Stats of Player 2"), NodePath("../Stats of Player 3"), NodePath("../Stats of Player 4")]
+
+[node name="Tutorial Text 1" type="Label" parent="Canvas Layer/Tutorial Stuff"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -289.0
+offset_top = -159.0
+offset_right = 293.0
+offset_bottom = -60.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.646029, 0.646029, 0.646029, 1)
+theme_override_fonts/font = ExtResource("8_nx7l1")
+theme_override_font_sizes/font_size = 48
+text = "Defeat the other players
+with your cards to win."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Tutorial Arrow" type="TextureRect" parent="Canvas Layer/Tutorial Stuff"]
+modulate = Color(0.647059, 0.647059, 0.647059, 1)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 71.0
+offset_top = -75.0
+offset_right = 175.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("7_tsn65")
+expand_mode = 3
+stretch_mode = 4
+
+[node name="Ready Label" type="Label" parent="Canvas Layer"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -291.0
+offset_top = -298.0
+offset_right = 291.0
+offset_bottom = -199.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.4875, 0.75, 0.4875, 1)
+theme_override_fonts/font = ExtResource("8_nx7l1")
+theme_override_font_sizes/font_size = 48
+text = "Your turn."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Card Deck Object" type="TextureRect" parent="Canvas Layer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -132.0
+offset_top = -70.0
+offset_right = 132.0
+offset_bottom = 70.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_pi5hg")
+expand_mode = 3
+stretch_mode = 5
+script = ExtResource("7_huy6n")
+
+[node name="Error Label" type="Label" parent="Canvas Layer/Card Deck Object"]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -291.0
+offset_top = -133.0
+offset_right = 291.0
+offset_bottom = -34.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.45098, 0.45098, 1)
+theme_override_fonts/font = ExtResource("8_nx7l1")
+theme_override_font_sizes/font_size = 48
+text = "Your card hand is full."
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("11_4bjfu")
+
+[node name="Card Deck Button" type="Button" parent="Canvas Layer/Card Deck Object"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 55.0
+offset_top = 23.0
+offset_right = -55.0
+offset_bottom = -14.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_f7mu5")
+theme_override_styles/hover = SubResource("StyleBoxFlat_jd1gs")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_gj7vp")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_t0vau")
+
+[node name="Stats of Player 1" parent="Canvas Layer" node_paths=PackedStringArray("referenceToPlayer") instance=ExtResource("10_wgafc")]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -1059.0
+offset_top = -1275.0
+offset_right = -1019.0
+offset_bottom = -1235.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(1.25, 1.25)
+referenceToPlayer = NodePath("../../Players/Player")
+playerName = "You"
+
+[node name="Hand UI of Player 1" type="PanelContainer" parent="Canvas Layer" node_paths=PackedStringArray("cardHandReference")]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -581.0
+offset_top = -174.0
+offset_right = 573.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("6_mjjxp")
+cardHandReference = NodePath("HBoxContainer")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Canvas Layer/Hand UI of Player 1"]
+layout_mode = 2
+alignment = 1
+
+[node name="Stats of Player 2" parent="Canvas Layer" node_paths=PackedStringArray("referenceToPlayer") instance=ExtResource("10_wgafc")]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -194.0
+offset_top = -927.0
+offset_right = -154.0
+offset_bottom = -887.0
+grow_vertical = 2
+referenceToPlayer = NodePath("../../Players/Player2")
+
+[node name="Hand UI of Player 2" type="PanelContainer" parent="Canvas Layer" node_paths=PackedStringArray("cardHandReference")]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 174.0
+offset_top = -540.0
+offset_right = 1045.0
+offset_bottom = -366.0
+grow_vertical = 2
+rotation = 1.5708
+script = ExtResource("6_mjjxp")
+cardHandReference = NodePath("HBoxContainer")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Canvas Layer/Hand UI of Player 2"]
+layout_mode = 2
+alignment = 1
+
+[node name="Stats of Player 3" parent="Canvas Layer" node_paths=PackedStringArray("referenceToPlayer") instance=ExtResource("10_wgafc")]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -499.0
+offset_top = -535.0
+offset_right = -459.0
+offset_bottom = -495.0
+grow_horizontal = 2
+referenceToPlayer = NodePath("../../Players/Player3")
+metadata/_edit_use_anchors_ = true
+
+[node name="Hand UI of Player 3" type="PanelContainer" parent="Canvas Layer" node_paths=PackedStringArray("cardHandReference")]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 435.0
+offset_top = 174.0
+offset_right = 1306.0
+offset_bottom = 348.0
+grow_horizontal = 2
+rotation = 3.14159
+script = ExtResource("6_mjjxp")
+cardHandReference = NodePath("HBoxContainer")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Canvas Layer/Hand UI of Player 3"]
+layout_mode = 2
+alignment = 1
+
+[node name="Stats of Player 4" parent="Canvas Layer" node_paths=PackedStringArray("referenceToPlayer") instance=ExtResource("10_wgafc")]
+layout_direction = 3
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -201.0
+offset_top = -927.0
+offset_right = -161.0
+offset_bottom = -887.0
+grow_vertical = 2
+referenceToPlayer = NodePath("../../Players/Player4")
+
+[node name="Hand UI of Player 4" type="PanelContainer" parent="Canvas Layer" node_paths=PackedStringArray("cardHandReference")]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -174.0
+offset_top = 331.0
+offset_right = 697.0
+offset_bottom = 505.0
+grow_horizontal = 0
+grow_vertical = 2
+rotation = -1.5708
+script = ExtResource("6_mjjxp")
+cardHandReference = NodePath("HBoxContainer")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Canvas Layer/Hand UI of Player 4"]
+layout_mode = 2
+alignment = 1
+
+[node name="Pointer Card Deck" type="Control" parent="Canvas Layer"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -65.0
+offset_top = -105.0
+offset_right = -64.0
+offset_bottom = -104.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Pointer Player1" type="Control" parent="Canvas Layer"]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -65.0
+offset_top = -174.0
+offset_right = -64.0
+offset_bottom = -173.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Pointer Player2" type="Control" parent="Canvas Layer"]
+layout_mode = 3
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -87.0
+offset_right = 40.0
+offset_bottom = -47.0
+grow_vertical = 2
+
+[node name="Pointer Player3" type="Control" parent="Canvas Layer"]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -65.25
+offset_right = -25.25
+offset_bottom = 40.0
+grow_horizontal = 2
+
+[node name="Pointer Player4" type="Control" parent="Canvas Layer"]
+layout_mode = 3
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -130.5
+offset_top = -87.0
+offset_right = -90.5
+offset_bottom = -47.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Game Over Screen" type="Control" parent="Canvas Layer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("15_0pcgg")
+
+[node name="Panel" type="Panel" parent="Canvas Layer/Game Over Screen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_egood")
+
+[node name="Lost Label" type="Label" parent="Canvas Layer/Game Over Screen"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -504.0
+offset_top = -96.0
+offset_right = 504.0
+offset_bottom = 96.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 0.45098, 0.45098, 1)
+theme_override_fonts/font = ExtResource("8_nx7l1")
+theme_override_font_sizes/font_size = 192
+text = "You lost."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Won Label" type="Label" parent="Canvas Layer/Game Over Screen"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -504.0
+offset_top = -96.0
+offset_right = 504.0
+offset_bottom = 96.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.4875, 0.75, 0.4875, 1)
+theme_override_fonts/font = ExtResource("8_nx7l1")
+theme_override_font_sizes/font_size = 192
+text = "You've won"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Replay Button" type="Button" parent="Canvas Layer/Game Over Screen"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -117.0
+offset_top = -407.0
+offset_right = 117.0
+offset_bottom = -298.0
+grow_horizontal = 2
+grow_vertical = 0
+focus_mode = 0
+theme_override_fonts/font = ExtResource("8_nx7l1")
+theme_override_font_sizes/font_size = 48
+text = "Replay"
+
+[node name="Quit Button" type="Button" parent="Canvas Layer/Game Over Screen"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -117.0
+offset_top = -261.0
+offset_right = 117.0
+offset_bottom = -152.0
+grow_horizontal = 2
+grow_vertical = 0
+focus_mode = 0
+theme_override_fonts/font = ExtResource("8_nx7l1")
+theme_override_font_sizes/font_size = 48
+text = "Quit"

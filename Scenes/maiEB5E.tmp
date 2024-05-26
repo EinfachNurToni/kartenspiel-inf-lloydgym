@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://0f8scb4gv44p"]
+
+[ext_resource type="Script" path="res://gameplayManager.gd" id="1_hlcmk"]
+[ext_resource type="Script" path="res://Scripts/CardDeck.gd" id="2_4lbfr"]
+[ext_resource type="Script" path="res://Scripts/Card.gd" id="2_h7o4c"]
+[ext_resource type="PackedScene" uid="uid://c6wc8s1ejppvk" path="res://Scenes/player.tscn" id="3_3yvdy"]
+
+[node name="Main" type="Node2D" node_paths=PackedStringArray("randomAssCard")]
+script = ExtResource("1_hlcmk")
+randomAssCard = NodePath("Card Deck/Card")
+
+[node name="Card Deck" type="Node" parent="." node_paths=PackedStringArray("cardsInDeck")]
+script = ExtResource("2_4lbfr")
+cardsInDeck = [NodePath("Card"), NodePath("Card2"), NodePath("Card3")]
+
+[node name="Card" type="Node" parent="Card Deck"]
+script = ExtResource("2_h7o4c")
+title = "1"
+
+[node name="Card2" type="Node" parent="Card Deck"]
+script = ExtResource("2_h7o4c")
+title = "2"
+
+[node name="Card3" type="Node" parent="Card Deck"]
+script = ExtResource("2_h7o4c")
+title = "3"
+
+[node name="Player" parent="." instance=ExtResource("3_3yvdy")]

@@ -1,0 +1,212 @@
+[gd_scene load_steps=8 format=3 uid="uid://0f8scb4gv44p"]
+
+[ext_resource type="Script" path="res://Scripts/GameplayManager.gd" id="1_hlcmk"]
+[ext_resource type="Script" path="res://Scripts/CardDeck.gd" id="2_4lbfr"]
+[ext_resource type="Script" path="res://Scripts/Card.gd" id="2_h7o4c"]
+[ext_resource type="PackedScene" uid="uid://c6wc8s1ejppvk" path="res://Scenes/player.tscn" id="3_3yvdy"]
+[ext_resource type="Texture2D" uid="uid://cymo6xnjaovph" path="res://Sprites/cardBackground.png" id="3_da4b7"]
+[ext_resource type="Script" path="res://Scripts/PlayerUI.gd" id="6_mjjxp"]
+[ext_resource type="Texture2D" uid="uid://bjye0nil1y4cg" path="res://Sprites/cardDeck.png" id="6_pi5hg"]
+
+[node name="Gameplay Manager" type="Node2D" node_paths=PackedStringArray("playerSequence", "playersTurnLabel")]
+script = ExtResource("1_hlcmk")
+playerSequence = [NodePath("Players/Player"), NodePath("Players/Player2"), NodePath("Players/Player3"), NodePath("Players/Player4")]
+playersTurnLabel = NodePath("Mitte Unten Label")
+
+[node name="Card Deck" type="Node" parent="." node_paths=PackedStringArray("cardsInDeck")]
+script = ExtResource("2_4lbfr")
+cardsInDeck = [NodePath("Attack Card"), NodePath("Defense Card"), NodePath("Defense Card"), NodePath("Attack Card"), NodePath("Defense Card"), NodePath("Attack Card"), NodePath("Defense Card"), NodePath("Attack Card"), NodePath("Defense Card"), NodePath("Attack Card"), NodePath("Attack Card"), NodePath("Card 3"), NodePath("Card 3"), NodePath("Attack Card"), NodePath("Attack Card"), NodePath("Card 3"), NodePath("Card 3"), NodePath("Card 3"), NodePath("Attack Card"), NodePath("Card 3"), NodePath("Attack Card")]
+
+[node name="Attack Card" type="TextureRect" parent="Card Deck"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -540.0
+offset_right = -829.5
+offset_bottom = -366.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(65.25, 87)
+texture = ExtResource("3_da4b7")
+expand_mode = 3
+stretch_mode = 4
+script = ExtResource("2_h7o4c")
+iconPath = "res://Sprites/attackCard.png"
+title = "Attack Card"
+
+[node name="Defense Card" type="TextureRect" parent="Card Deck"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -540.0
+offset_right = -829.5
+offset_bottom = -366.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(65.25, 87)
+texture = ExtResource("3_da4b7")
+expand_mode = 3
+stretch_mode = 4
+script = ExtResource("2_h7o4c")
+iconPath = "res://Sprites/defenseCard.png"
+title = "Defense Card"
+
+[node name="Card 3" type="TextureRect" parent="Card Deck"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -540.0
+offset_right = -829.5
+offset_bottom = -366.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(65.25, 87)
+texture = ExtResource("3_da4b7")
+expand_mode = 3
+stretch_mode = 4
+script = ExtResource("2_h7o4c")
+iconPath = "res://Sprites/attackCard.png"
+title = "Card 3"
+
+[node name="Players" type="Node" parent="."]
+
+[node name="Player" parent="Players" node_paths=PackedStringArray("handUIObject") instance=ExtResource("3_3yvdy")]
+playerName = "1"
+positionOfCardHandObject = Vector2(895, 906)
+handUIObject = NodePath("../../Canvas Layer/Hand UI of Player 1")
+
+[node name="Player2" parent="Players" node_paths=PackedStringArray("handUIObject") instance=ExtResource("3_3yvdy")]
+playerName = "2"
+positionOfCardHandObject = Vector2(0, 453)
+handUIObject = NodePath("../../Canvas Layer/Hand UI of Player 2")
+
+[node name="Player3" parent="Players" node_paths=PackedStringArray("handUIObject") instance=ExtResource("3_3yvdy")]
+playerName = "3"
+positionOfCardHandObject = Vector2(894.75, 0)
+handUIObject = NodePath("../../Canvas Layer/Hand UI of Player 3")
+
+[node name="Player4" parent="Players" node_paths=PackedStringArray("handUIObject") instance=ExtResource("3_3yvdy")]
+playerName = "4"
+positionOfCardHandObject = Vector2(1789.5, 453)
+handUIObject = NodePath("../../Canvas Layer/Hand UI of Player 4")
+
+[node name="Mitte Unten Label" type="Label" parent="."]
+visible = false
+offset_left = 881.0
+offset_top = 628.0
+offset_right = 1043.0
+offset_bottom = 651.0
+theme_override_colors/font_color = Color(0, 0.85098, 0, 1)
+text = "Du bist dran!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Canvas Layer" type="CanvasLayer" parent="."]
+
+[node name="Card Deck Object" type="TextureRect" parent="Canvas Layer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -132.0
+offset_top = -70.0
+offset_right = 132.0
+offset_bottom = 70.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("6_pi5hg")
+expand_mode = 3
+stretch_mode = 5
+metadata/_edit_use_anchors_ = true
+
+[node name="Label" type="Label" parent="Canvas Layer"]
+offset_left = 218.0
+offset_top = 436.0
+offset_right = 258.0
+offset_bottom = 459.0
+text = "10"
+
+[node name="Hand UI of Player 1" type="PanelContainer" parent="Canvas Layer" node_paths=PackedStringArray("cardHandReference")]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -581.0
+offset_top = -174.0
+offset_right = 573.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("6_mjjxp")
+cardHandReference = NodePath("HBoxContainer")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Canvas Layer/Hand UI of Player 1"]
+layout_mode = 2
+alignment = 1
+
+[node name="Hand UI of Player 2" type="PanelContainer" parent="Canvas Layer" node_paths=PackedStringArray("cardHandReference")]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 174.0
+offset_top = -540.0
+offset_right = 1045.0
+offset_bottom = -366.0
+grow_vertical = 2
+rotation = 1.5708
+script = ExtResource("6_mjjxp")
+cardHandReference = NodePath("HBoxContainer")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Canvas Layer/Hand UI of Player 2"]
+layout_mode = 2
+alignment = 1
+
+[node name="Hand UI of Player 3" type="PanelContainer" parent="Canvas Layer" node_paths=PackedStringArray("cardHandReference")]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = 435.0
+offset_top = 174.0
+offset_right = 1306.0
+offset_bottom = 348.0
+grow_horizontal = 2
+rotation = 3.14159
+script = ExtResource("6_mjjxp")
+cardHandReference = NodePath("HBoxContainer")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Canvas Layer/Hand UI of Player 3"]
+layout_mode = 2
+alignment = 1
+
+[node name="Hand UI of Player 4" type="PanelContainer" parent="Canvas Layer" node_paths=PackedStringArray("cardHandReference")]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -174.0
+offset_top = 331.0
+offset_right = 697.0
+offset_bottom = 505.0
+grow_horizontal = 0
+grow_vertical = 2
+rotation = -1.5708
+script = ExtResource("6_mjjxp")
+cardHandReference = NodePath("HBoxContainer")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Canvas Layer/Hand UI of Player 4"]
+layout_mode = 2
+alignment = 1

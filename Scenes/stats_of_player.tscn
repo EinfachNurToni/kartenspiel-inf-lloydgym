@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3 uid="uid://v3nhyv6q1hlp"]
+
+[ext_resource type="Script" path="res://Scripts/PlayerStats.gd" id="1_ega5u"]
+[ext_resource type="FontFile" uid="uid://cag4oyvhd1ms4" path="res://Fonts/pixelme.ttf" id="2_2vf1r"]
+
+[node name="Stats of Player 1" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_ega5u")
+
+[node name="Title of Player" type="Label" parent="."]
+layout_mode = 0
+offset_left = 384.0
+offset_top = 720.0
+offset_right = 576.0
+offset_bottom = 768.0
+theme_override_colors/font_color = Color(0.864675, 0.864675, 0.864675, 1)
+theme_override_fonts/font = ExtResource("2_2vf1r")
+theme_override_font_sizes/font_size = 48
+text = "- Player"
+
+[node name="Health of Player" type="Label" parent="."]
+layout_mode = 0
+offset_left = 384.0
+offset_top = 780.0
+offset_right = 522.0
+offset_bottom = 828.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("2_2vf1r")
+theme_override_font_sizes/font_size = 48
+text = "HP: 100"
+
+[node name="Defense of Player" type="Label" parent="."]
+layout_mode = 0
+offset_left = 384.0
+offset_top = 828.0
+offset_right = 630.0
+offset_bottom = 876.0
+theme_override_colors/font_color = Color(0.646029, 0.646029, 0.646029, 1)
+theme_override_fonts/font = ExtResource("2_2vf1r")
+theme_override_font_sizes/font_size = 48
+text = "Defense: 0"
